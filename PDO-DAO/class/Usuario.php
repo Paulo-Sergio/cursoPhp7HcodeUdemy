@@ -6,6 +6,11 @@ class Usuario {
     private $deslogin;
     private $dessenha;
     private $dtcadastro;
+    
+    public function __construct($login = "", $senha = "") {
+        $this->setDeslogin($login);
+        $this->setDessenha($senha);
+    }
 
     public function getIdusuario() {
         return $this->idusuario;
@@ -59,10 +64,7 @@ class Usuario {
 
         if (count($results) > 0) {
             $row = $results[0];
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($row);
         }
     }
 
@@ -89,14 +91,28 @@ class Usuario {
         ));
 
         if (count($results) > 0) {
-            $row = $results[0];
-            $this->setIdusuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($results[0]);
         } else {
             throw new Exception("Login e/ou senha inválidos");
         }
+    }
+
+    public function insere() {
+        $sql = new Sql();
+        $results = $sql->select("CALL sp_usuario_insert(:LOGIN, :SENHA)", array(
+            ':LOGIN' => $this->getDeslogin(),
+            ':SENHA' => $this->getDessenha()
+        ));
+        if(count($results) > 0){
+            $this->setData($results[0]);
+        }
+    }
+
+    private function setData($data) {
+        $this->setIdusuario($data['idusuario']);
+        $this->setDeslogin($data['deslogin']);
+        $this->setDessenha($data['dessenha']);
+        $this->setDtcadastro(new DateTime($data['dtcadastro']));
     }
 
 }
