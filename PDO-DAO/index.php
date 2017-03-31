@@ -21,6 +21,11 @@ require_once './config.php';
 //echo $usuario;
 
 /*** inserindo e recuperando ID inserido ***/
-$aluno = new Usuario("Aluno 2", "senha123");
-$aluno->insere();
-echo $aluno;
+//$aluno = new Usuario("Aluno 2", "senha123");
+//$aluno->insere();
+//echo $aluno;
+
+/*** update de usuário ***/
+$usuario = new Usuario();
+$usuario->loadById(5);
+$usuario->update("Josefino", "@789456#");
