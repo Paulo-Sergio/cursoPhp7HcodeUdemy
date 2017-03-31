@@ -120,6 +120,14 @@ class Usuario {
         ));
     }
     
+    public function delete(){
+        $sql = new Sql();
+        $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+            ':ID' => $this->getIdusuario()
+        ));
+        
+    }
+    
     private function setData($data) {
         $this->setIdusuario($data['idusuario']);
         $this->setDeslogin($data['deslogin']);
