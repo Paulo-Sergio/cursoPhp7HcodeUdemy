@@ -6,7 +6,7 @@ class Usuario {
     private $deslogin;
     private $dessenha;
     private $dtcadastro;
-    
+
     public function __construct($login = "", $senha = "") {
         $this->setDeslogin($login);
         $this->setDessenha($senha);
@@ -60,7 +60,9 @@ class Usuario {
 
     public function loadById($id) {
         $sql = new Sql();
-        $results = $sql->select("SELECT * FROM  tb_usuarios WHERE idusuario = :ID", array(":ID" => $id));
+        $results = $sql->select("SELECT * FROM  tb_usuarios WHERE idusuario = :ID", array(
+            ":ID" => $id
+        ));
 
         if (count($results) > 0) {
             $row = $results[0];
@@ -103,7 +105,7 @@ class Usuario {
             ':LOGIN' => $this->getDeslogin(),
             ':SENHA' => $this->getDessenha()
         ));
-        if(count($results) > 0){
+        if (count($results) > 0) {
             $this->setData($results[0]);
         }
     }
@@ -111,7 +113,7 @@ class Usuario {
     public function update($login, $senha) {
         $this->setDeslogin($login);
         $this->setDessenha($senha);
-        
+
         $sql = new Sql;
         $sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :SENHA WHERE idusuario = :ID", array(
             ':LOGIN' => $this->getDeslogin(),
@@ -119,15 +121,14 @@ class Usuario {
             ':ID' => $this->getIdusuario()
         ));
     }
-    
-    public function delete(){
+
+    public function delete() {
         $sql = new Sql();
         $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
             ':ID' => $this->getIdusuario()
         ));
-        
     }
-    
+
     private function setData($data) {
         $this->setIdusuario($data['idusuario']);
         $this->setDeslogin($data['deslogin']);

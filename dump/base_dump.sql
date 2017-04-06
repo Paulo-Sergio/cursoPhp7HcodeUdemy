@@ -40,6 +40,35 @@ LOCK TABLES `tb_usuarios` WRITE;
 INSERT INTO `tb_usuarios` VALUES (1,'root','pass@!#','2017-03-30 18:34:48'),(6,'João','45678','2017-03-31 13:55:49'),(7,'aluno','@456','2017-03-31 14:46:24'),(5,'Josefino','@789456#','2017-03-30 18:56:48'),(8,'Aluno 2','senha123','2017-03-31 17:25:57');
 /*!40000 ALTER TABLE `tb_usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'dbphp7'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `sp_usuario_insert` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_ALL_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_usuario_insert`(
+	pdeslogin varchar(64), pdessenha varchar(256)
+)
+BEGIN
+	
+    INSERT tb_usuarios(deslogin, dessenha) VALUES (pdeslogin, pdessenha);
+    
+    SELECT * FROM tb_usuarios WHERE idusuario = LAST_INSERT_ID();
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -50,4 +79,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-31 16:51:58
+-- Dump completed on 2017-04-06 10:28:59
